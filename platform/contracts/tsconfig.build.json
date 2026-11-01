@@ -1,0 +1,12 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "rootDir": "src",
+    "outDir": "dist/cjs",
+    "lib": ["ES2023", "DOM"],
+    "verbatimModuleSyntax": false
+  },
+  "include": ["src/**/*.ts"]
+}

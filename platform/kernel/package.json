@@ -1,0 +1,37 @@
+{
+  "name": "@h-os/kernel",
+  "version": "0.0.0",
+  "private": true,
+  "description": "H-OS platform kernel: identity, authorization, org-scope resolution, audit, outbox, entity links. Small by design (ARCH-013).",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "lint": "eslint src",
+    "test": "vitest run --passWithNoTests",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "node ./scripts/migrate.mjs"
+  },
+  "dependencies": {
+    "@h-os/contracts": "workspace:*",
+    "@nestjs/common": "12.3.2",
+    "@nestjs/core": "12.3.2",
+    "argon2": "0.45.1",
+    "drizzle-orm": "0.45.4",
+    "express": "5.2.1",
+    "pino": "10.4.0",
+    "postgres": "3.4.9",
+    "zod": "4.6.7"
+  },
+  "devDependencies": {
+    "@types/express": "5.0.6",
+    "@types/node": "26.6.6",
+    "drizzle-kit": "0.31.11",
+    "typescript": "6.0.3",
+    "vitest": "5.0.5"
+  }
+}

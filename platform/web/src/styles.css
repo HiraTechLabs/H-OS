@@ -1,0 +1,13 @@
+/*
+ * The shell owns the single Tailwind import; `@h-os/ui/styles.css` only contributes theme tokens
+ * and component classes, so the framework is never imported twice (DEC-0004).
+ *
+ * App packages live outside this directory, so their sources are declared explicitly: automatic
+ * content detection would otherwise miss them across workspace symlinks (UX-005).
+ */
+@import 'tailwindcss';
+@import '@h-os/ui/styles.css';
+
+@source './**/*.{ts,tsx}';
+@source '../../ui/src/**/*.{ts,tsx}';
+@source '../../../apps/hr/web/src/**/*.{ts,tsx}';

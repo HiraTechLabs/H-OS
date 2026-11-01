@@ -1,0 +1,41 @@
+{
+  "name": "@h-os/hr-web",
+  "version": "0.0.0",
+  "private": true,
+  "description": "H-HR web screens: employee records, organization structure and self-service.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./navigation": "./src/navigation.ts",
+    "./screens/employees-list": "./src/screens/employees-list.tsx",
+    "./screens/employee-new": "./src/screens/employee-new.tsx",
+    "./screens/employee-profile": "./src/screens/employee-profile.tsx",
+    "./screens/organization": "./src/screens/organization.tsx",
+    "./screens/my-profile": "./src/screens/my-profile.tsx",
+    "./i18n": "./src/i18n/index.ts"
+  },
+  "files": ["src"],
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "lint": "eslint src test",
+    "test": "vitest run --config vitest.config.ts"
+  },
+  "dependencies": {
+    "@h-os/contracts": "workspace:*",
+    "@h-os/i18n": "workspace:*",
+    "@h-os/ui": "workspace:*",
+    "@h-os/web-client": "workspace:*",
+    "@tanstack/react-query": "5.105.0",
+    "@tanstack/react-router": "1.170.46",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "react-hook-form": "7.91.0",
+    "react-i18next": "17.1.9"
+  },
+  "devDependencies": {
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "typescript": "6.0.3",
+    "vitest": "5.0.5"
+  }
+}

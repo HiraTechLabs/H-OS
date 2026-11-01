@@ -1,0 +1,29 @@
+{
+  "name": "@h-os/web-client",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Browser API client, session context and permission helpers shared by the shell and apps.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "files": ["src"],
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "lint": "eslint src test",
+    "test": "vitest run --config vitest.config.ts"
+  },
+  "dependencies": {
+    "@h-os/contracts": "workspace:*",
+    "@h-os/i18n": "workspace:*"
+  },
+  "peerDependencies": {
+    "react": "^19.3.0"
+  },
+  "devDependencies": {
+    "@types/react": "19.3.0",
+    "react": "19.3.1",
+    "typescript": "6.0.3",
+    "vitest": "5.0.5"
+  }
+}

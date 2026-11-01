@@ -1,0 +1,37 @@
+{
+  "name": "@h-os/web",
+  "version": "0.0.0",
+  "private": true,
+  "description": "H-OS shell: one React application hosting every app behind one login (DEC-0004).",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -p tsconfig.json --noEmit && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "lint": "eslint src",
+    "test": "vitest run --passWithNoTests"
+  },
+  "dependencies": {
+    "@h-os/contracts": "workspace:*",
+    "@h-os/hr-web": "workspace:*",
+    "@h-os/i18n": "workspace:*",
+    "@h-os/ui": "workspace:*",
+    "@h-os/web-client": "workspace:*",
+    "@tanstack/react-query": "5.105.0",
+    "@tanstack/react-router": "1.170.46",
+    "i18next": "26.5.11",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "react-i18next": "17.1.9"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "4.3.3",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "tailwindcss": "4.3.3",
+    "typescript": "6.0.3",
+    "vite": "8.3.5",
+    "vitest": "5.0.5"
+  }
+}

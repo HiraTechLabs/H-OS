@@ -1,0 +1,15 @@
+{
+  "$comment": "Hand-written facts the generator cannot infer: descriptions, ownership and external systems. Structural facts (packages, dependencies, tables, events) are always generated.",
+  "descriptions": {
+    "@h-os/api": "Composition root: one Nest application that mounts every app module (DEC-0001, DEC-0003).",
+    "@h-os/contracts": "Shared Zod schemas, permission constants, event types and API types. The only cross-app import.",
+    "@h-os/hr-api": "H-HR backend module: employee records, employment episodes, organization structure and audit.",
+    "@h-os/hr-web": "H-HR frontend screens: directory, profile, organization, self-service.",
+    "@h-os/i18n": "i18next instance and the shell catalogs (English and Arabic).",
+    "@h-os/kernel": "Platform kernel: identity, sessions, authorization, audit, outbox, problem details.",
+    "@h-os/ui": "Design tokens and unstyled-safe primitives shared by every screen (DEC-0004).",
+    "@h-os/web": "Single web shell: routing, session, launcher and app host (DEC-0004).",
+    "@h-os/web-client": "Browser API client, session provider, permission helpers and formatting."
+  },
+  "externalSystems": []
+}

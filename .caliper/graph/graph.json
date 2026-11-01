@@ -1,0 +1,409 @@
+{
+  "generatedBy": "tools/graph/generate.mjs",
+  "nodes": [
+    {
+      "id": "@h-os/api",
+      "type": "app",
+      "owningApp": "h-os",
+      "path": "platform/api",
+      "description": "Composition root: one Nest application that mounts every app module (DEC-0001, DEC-0003).",
+      "data": [],
+      "contract": null
+    },
+    {
+      "id": "@h-os/contracts",
+      "type": "contract",
+      "owningApp": "h-os",
+      "path": "platform/contracts",
+      "description": "Shared Zod schemas, permission constants, event types and API types. The only cross-app import.",
+      "data": [],
+      "contract": "platform/contracts/src/index.ts"
+    },
+    {
+      "id": "@h-os/hr-api",
+      "type": "module",
+      "owningApp": "h-hr",
+      "path": "apps/hr/api",
+      "description": "H-HR backend module: employee records, employment episodes, organization structure and audit.",
+      "data": [
+        "hr.branch",
+        "hr.emergency_contact",
+        "hr.employee",
+        "hr.employee_account_link",
+        "hr.employee_contact",
+        "hr.employee_document_ref",
+        "hr.employee_manager_assignment",
+        "hr.employee_number_sequence",
+        "hr.employee_org_assignment",
+        "hr.employee_person",
+        "hr.employee_status_transition",
+        "hr.employee_timeline",
+        "hr.employment_contract",
+        "hr.employment_episode",
+        "hr.job_grade",
+        "hr.job_title",
+        "hr.org_unit",
+        "hr.org_unit_history",
+        "hr.work_location",
+        "hr.work_schedule"
+      ],
+      "contract": null
+    },
+    {
+      "id": "@h-os/hr-web",
+      "type": "module",
+      "owningApp": "h-hr",
+      "path": "apps/hr/web",
+      "description": "H-HR frontend screens: directory, profile, organization, self-service.",
+      "data": [],
+      "contract": null
+    },
+    {
+      "id": "@h-os/i18n",
+      "type": "module",
+      "owningApp": "h-os",
+      "path": "platform/i18n",
+      "description": "i18next instance and the shell catalogs (English and Arabic).",
+      "data": [],
+      "contract": null
+    },
+    {
+      "id": "@h-os/kernel",
+      "type": "module",
+      "owningApp": "h-os",
+      "path": "platform/kernel",
+      "description": "Platform kernel: identity, sessions, authorization, audit, outbox, problem details.",
+      "data": [
+        "platform.account",
+        "platform.account_role",
+        "platform.audit_record",
+        "platform.entity_link",
+        "platform.organization",
+        "platform.outbox_event",
+        "platform.permission",
+        "platform.role",
+        "platform.role_permission",
+        "platform.session"
+      ],
+      "contract": null
+    },
+    {
+      "id": "@h-os/ui",
+      "type": "module",
+      "owningApp": "h-os",
+      "path": "platform/ui",
+      "description": "Design tokens and unstyled-safe primitives shared by every screen (DEC-0004).",
+      "data": [],
+      "contract": null
+    },
+    {
+      "id": "@h-os/web",
+      "type": "app",
+      "owningApp": "h-os",
+      "path": "platform/web",
+      "description": "Single web shell: routing, session, launcher and app host (DEC-0004).",
+      "data": [],
+      "contract": null
+    },
+    {
+      "id": "@h-os/web-client",
+      "type": "module",
+      "owningApp": "h-os",
+      "path": "platform/client",
+      "description": "Browser API client, session provider, permission helpers and formatting.",
+      "data": [],
+      "contract": null
+    },
+    {
+      "id": "datastore:postgres",
+      "type": "datastore",
+      "owningApp": "h-os",
+      "path": null,
+      "description": "PostgreSQL 16. One database, one schema per owner; no cross-schema joins.",
+      "data": [
+        "hr.branch",
+        "hr.emergency_contact",
+        "hr.employee",
+        "hr.employee_account_link",
+        "hr.employee_contact",
+        "hr.employee_document_ref",
+        "hr.employee_manager_assignment",
+        "hr.employee_number_sequence",
+        "hr.employee_org_assignment",
+        "hr.employee_person",
+        "hr.employee_status_transition",
+        "hr.employee_timeline",
+        "hr.employment_contract",
+        "hr.employment_episode",
+        "hr.job_grade",
+        "hr.job_title",
+        "hr.org_unit",
+        "hr.org_unit_history",
+        "hr.work_location",
+        "hr.work_schedule",
+        "platform.account",
+        "platform.account_role",
+        "platform.audit_record",
+        "platform.entity_link",
+        "platform.organization",
+        "platform.outbox_event",
+        "platform.permission",
+        "platform.role",
+        "platform.role_permission",
+        "platform.session"
+      ],
+      "contract": null
+    },
+    {
+      "id": "hr.account-linked.v1",
+      "type": "event",
+      "owningApp": "h-hr",
+      "path": "platform/contracts/src/events.ts",
+      "description": "Versioned domain event hr.account-linked.v1.",
+      "data": [],
+      "contract": "platform/contracts/src/events.ts#hr.account-linked.v1"
+    },
+    {
+      "id": "hr.assignment.changed.v1",
+      "type": "event",
+      "owningApp": "h-hr",
+      "path": "platform/contracts/src/events.ts",
+      "description": "Versioned domain event hr.assignment.changed.v1.",
+      "data": [],
+      "contract": "platform/contracts/src/events.ts#hr.assignment.changed.v1"
+    },
+    {
+      "id": "hr.employee.created.v1",
+      "type": "event",
+      "owningApp": "h-hr",
+      "path": "platform/contracts/src/events.ts",
+      "description": "Versioned domain event hr.employee.created.v1.",
+      "data": [],
+      "contract": "platform/contracts/src/events.ts#hr.employee.created.v1"
+    },
+    {
+      "id": "hr.employee.status-changed.v1",
+      "type": "event",
+      "owningApp": "h-hr",
+      "path": "platform/contracts/src/events.ts",
+      "description": "Versioned domain event hr.employee.status-changed.v1.",
+      "data": [],
+      "contract": "platform/contracts/src/events.ts#hr.employee.status-changed.v1"
+    },
+    {
+      "id": "hr.employee.updated.v1",
+      "type": "event",
+      "owningApp": "h-hr",
+      "path": "platform/contracts/src/events.ts",
+      "description": "Versioned domain event hr.employee.updated.v1.",
+      "data": [],
+      "contract": "platform/contracts/src/events.ts#hr.employee.updated.v1"
+    },
+    {
+      "id": "hr.employment-episode.ended.v1",
+      "type": "event",
+      "owningApp": "h-hr",
+      "path": "platform/contracts/src/events.ts",
+      "description": "Versioned domain event hr.employment-episode.ended.v1.",
+      "data": [],
+      "contract": "platform/contracts/src/events.ts#hr.employment-episode.ended.v1"
+    },
+    {
+      "id": "hr.employment-episode.started.v1",
+      "type": "event",
+      "owningApp": "h-hr",
+      "path": "platform/contracts/src/events.ts",
+      "description": "Versioned domain event hr.employment-episode.started.v1.",
+      "data": [],
+      "contract": "platform/contracts/src/events.ts#hr.employment-episode.started.v1"
+    },
+    {
+      "id": "hr.manager.changed.v1",
+      "type": "event",
+      "owningApp": "h-hr",
+      "path": "platform/contracts/src/events.ts",
+      "description": "Versioned domain event hr.manager.changed.v1.",
+      "data": [],
+      "contract": "platform/contracts/src/events.ts#hr.manager.changed.v1"
+    },
+    {
+      "id": "platform.org-scope.changed.v1",
+      "type": "event",
+      "owningApp": "h-os",
+      "path": "platform/contracts/src/events.ts",
+      "description": "Versioned domain event platform.org-scope.changed.v1.",
+      "data": [],
+      "contract": "platform/contracts/src/events.ts#platform.org-scope.changed.v1"
+    }
+  ],
+  "edges": [
+    {
+      "from": "@h-os/api",
+      "to": "@h-os/contracts",
+      "type": "depends-on",
+      "reason": "runtime workspace dependency"
+    },
+    {
+      "from": "@h-os/api",
+      "to": "@h-os/hr-api",
+      "type": "depends-on",
+      "reason": "runtime workspace dependency"
+    },
+    {
+      "from": "@h-os/api",
+      "to": "@h-os/kernel",
+      "type": "depends-on",
+      "reason": "runtime workspace dependency"
+    },
+    {
+      "from": "@h-os/hr-api",
+      "to": "@h-os/contracts",
+      "type": "depends-on",
+      "reason": "runtime workspace dependency"
+    },
+    {
+      "from": "@h-os/hr-api",
+      "to": "@h-os/kernel",
+      "type": "depends-on",
+      "reason": "runtime workspace dependency"
+    },
+    {
+      "from": "@h-os/hr-api",
+      "to": "datastore:postgres",
+      "type": "owns-data",
+      "reason": "defines PostgreSQL schema \"hr\""
+    },
+    {
+      "from": "@h-os/hr-api",
+      "to": "hr.account-linked.v1",
+      "type": "publishes",
+      "reason": "recorded in the transactional outbox with the state change (ARCH-007)"
+    },
+    {
+      "from": "@h-os/hr-api",
+      "to": "hr.assignment.changed.v1",
+      "type": "publishes",
+      "reason": "recorded in the transactional outbox with the state change (ARCH-007)"
+    },
+    {
+      "from": "@h-os/hr-api",
+      "to": "hr.employee.created.v1",
+      "type": "publishes",
+      "reason": "recorded in the transactional outbox with the state change (ARCH-007)"
+    },
+    {
+      "from": "@h-os/hr-api",
+      "to": "hr.employee.status-changed.v1",
+      "type": "publishes",
+      "reason": "recorded in the transactional outbox with the state change (ARCH-007)"
+    },
+    {
+      "from": "@h-os/hr-api",
+      "to": "hr.employee.updated.v1",
+      "type": "publishes",
+      "reason": "recorded in the transactional outbox with the state change (ARCH-007)"
+    },
+    {
+      "from": "@h-os/hr-api",
+      "to": "hr.employment-episode.ended.v1",
+      "type": "publishes",
+      "reason": "recorded in the transactional outbox with the state change (ARCH-007)"
+    },
+    {
+      "from": "@h-os/hr-api",
+      "to": "hr.employment-episode.started.v1",
+      "type": "publishes",
+      "reason": "recorded in the transactional outbox with the state change (ARCH-007)"
+    },
+    {
+      "from": "@h-os/hr-api",
+      "to": "hr.manager.changed.v1",
+      "type": "publishes",
+      "reason": "recorded in the transactional outbox with the state change (ARCH-007)"
+    },
+    {
+      "from": "@h-os/hr-web",
+      "to": "@h-os/contracts",
+      "type": "depends-on",
+      "reason": "runtime workspace dependency"
+    },
+    {
+      "from": "@h-os/hr-web",
+      "to": "@h-os/i18n",
+      "type": "depends-on",
+      "reason": "runtime workspace dependency"
+    },
+    {
+      "from": "@h-os/hr-web",
+      "to": "@h-os/ui",
+      "type": "depends-on",
+      "reason": "runtime workspace dependency"
+    },
+    {
+      "from": "@h-os/hr-web",
+      "to": "@h-os/web-client",
+      "type": "depends-on",
+      "reason": "runtime workspace dependency"
+    },
+    {
+      "from": "@h-os/kernel",
+      "to": "@h-os/contracts",
+      "type": "depends-on",
+      "reason": "runtime workspace dependency"
+    },
+    {
+      "from": "@h-os/kernel",
+      "to": "datastore:postgres",
+      "type": "owns-data",
+      "reason": "defines PostgreSQL schema \"platform\""
+    },
+    {
+      "from": "@h-os/kernel",
+      "to": "platform.org-scope.changed.v1",
+      "type": "publishes",
+      "reason": "recorded in the transactional outbox with the state change (ARCH-007)"
+    },
+    {
+      "from": "@h-os/web",
+      "to": "@h-os/contracts",
+      "type": "depends-on",
+      "reason": "runtime workspace dependency"
+    },
+    {
+      "from": "@h-os/web",
+      "to": "@h-os/hr-web",
+      "type": "depends-on",
+      "reason": "runtime workspace dependency"
+    },
+    {
+      "from": "@h-os/web",
+      "to": "@h-os/i18n",
+      "type": "depends-on",
+      "reason": "runtime workspace dependency"
+    },
+    {
+      "from": "@h-os/web",
+      "to": "@h-os/ui",
+      "type": "depends-on",
+      "reason": "runtime workspace dependency"
+    },
+    {
+      "from": "@h-os/web",
+      "to": "@h-os/web-client",
+      "type": "depends-on",
+      "reason": "runtime workspace dependency"
+    },
+    {
+      "from": "@h-os/web-client",
+      "to": "@h-os/contracts",
+      "type": "depends-on",
+      "reason": "runtime workspace dependency"
+    },
+    {
+      "from": "@h-os/web-client",
+      "to": "@h-os/i18n",
+      "type": "depends-on",
+      "reason": "runtime workspace dependency"
+    }
+  ]
+}
