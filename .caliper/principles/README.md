@@ -4,7 +4,7 @@ These files are the parent principles of the **H-OS** project (HiraTechLabs).
 Every app inside H-OS (H-HR, H-Asset, H-Finance, ...) inherits them and may add its own.
 Caliper's Planning, Execution and Review models are bound by them.
 
-H-OS is an integrated business operating system: modular monolith by default, app ownership boundaries enforced, and cross-app communication through published contracts and versioned events. The backend stack choice is resolved by `DEC-0001` and the design system and dashboard rules remain subject to approved Decisions before additional visualization libraries are introduced.
+H-OS is an integrated business operating system: modular monolith by default, app ownership boundaries enforced, and cross-app communication through published contracts and versioned events. The backend stack choice is **under re-evaluation**: `DEC-0001` (NestJS) is `proposed` and `DEC-0008` compares Go, C# + ASP.NET Core, Java + Spring Boot and the NestJS baseline; no replacement is approved. The design system and dashboard rules remain subject to approved Decisions before additional visualization libraries are introduced.
 
 Arabic overview for humans: `README.ar.md`.
 
