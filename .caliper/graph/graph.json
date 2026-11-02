@@ -6,7 +6,7 @@
       "type": "app",
       "owningApp": "h-os",
       "path": "platform/api",
-      "description": "Composition root: one Nest application that mounts every app module (DEC-0001, DEC-0003).",
+      "description": "Composition root: one HTTP application that mounts every app module. NestJS is the implemented baseline; the backend runtime is under re-evaluation (DEC-0001 proposed, DEC-0008), kernel scope in DEC-0003.",
       "data": [],
       "contract": null
     },

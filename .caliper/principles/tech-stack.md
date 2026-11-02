@@ -2,7 +2,12 @@
 
 The committed stack for H-OS. Caliper must not ask for a stack preset; this file is the preset. Deviation requires a Decision.
 
-Status: the backend language/framework row is resolved by accepted Decision `DEC-0001`. The rest of the stack remains the preset unless a later Decision changes it; all other rule files are language-neutral except where they name tools.
+Status: the backend language/framework row is **under re-evaluation**. `DEC-0001` (TypeScript on
+Node.js LTS, NestJS) moved from `accepted` to `proposed` on 2026-11-02 and `DEC-0008` records the open
+comparison between Go, C# + ASP.NET Core, Java + Spring Boot and the NestJS baseline. **No
+replacement is approved and no candidate may be adopted** until a replacement Decision is accepted.
+The rest of the stack remains the preset unless a later Decision changes it; all other rule files are
+language-neutral except where they name tools.
 
 ## Committed stack
 
@@ -81,3 +86,6 @@ Not allowed without a Decision: splitting into microservices, GraphQL, a second 
 
 ### STK-011 [must|review] ui, docs
 Any additional charting, dashboard, diagramming, or visualization library beyond the committed stack requires a Decision that documents the business need, alternatives, accessibility implications, and maintenance cost. The initial visual direction remains a proposal for evaluation until a Decision accepts it.
+
+### STK-012 [must|review] decision, deps, api
+The backend runtime and framework are an open question (`DEC-0008`). Until a replacement Decision is accepted, the existing NestJS application is the reference implementation, new backend work follows this stack, and no second backend stack, framework or runtime may be introduced.

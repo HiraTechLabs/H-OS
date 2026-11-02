@@ -1,7 +1,7 @@
 {
   "$comment": "Hand-written facts the generator cannot infer: descriptions, ownership and external systems. Structural facts (packages, dependencies, tables, events) are always generated.",
   "descriptions": {
-    "@h-os/api": "Composition root: one Nest application that mounts every app module (DEC-0001, DEC-0003).",
+    "@h-os/api": "Composition root: one HTTP application that mounts every app module. NestJS is the implemented baseline; the backend runtime is under re-evaluation (DEC-0001 proposed, DEC-0008), kernel scope in DEC-0003.",
     "@h-os/contracts": "Shared Zod schemas, permission constants, event types and API types. The only cross-app import.",
     "@h-os/hr-api": "H-HR backend module: employee records, employment episodes, organization structure and audit.",
     "@h-os/hr-web": "H-HR frontend screens: directory, profile, organization, self-service.",

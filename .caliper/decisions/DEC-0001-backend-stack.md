@@ -1,7 +1,7 @@
 ---
 id: DEC-0001
 title: Adopt NestJS on TypeScript for the H-OS backend
-status: accepted
+status: proposed
 date: 2026-10-29
 tags:
   - tech-stack
