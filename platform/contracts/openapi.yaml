@@ -1,0 +1,451 @@
+openapi: 3.1.0
+info:
+  title: H-OS API
+  version: 1.0.0
+  description: Authoritative OpenAPI 3.1 specification for the H-OS Platform and H-HR application.
+servers:
+  - url: /api/v1
+    description: H-OS API v1 base path
+paths:
+  /auth/login:
+    post:
+      summary: Sign in and receive a session cookie
+      operationId: authLogin
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, password]
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+      responses:
+        '200':
+          description: Session issued
+        '400':
+          description: Validation error
+        '401':
+          description: Invalid credentials
+        '429':
+          description: Rate limited
+  /auth/logout:
+    post:
+      summary: End the current session
+      operationId: authLogout
+      responses:
+        '204':
+          description: Session terminated
+  /auth/me:
+    get:
+      summary: Read the current session
+      operationId: authMe
+      responses:
+        '200':
+          description: Current session user
+        '401':
+          description: Unauthenticated
+  /apps:
+    get:
+      summary: List visible applications for the current session
+      operationId: listApps
+      responses:
+        '200':
+          description: List of visible registered applications
+        '401':
+          description: Unauthenticated
+  /platform/accounts:
+    get:
+      summary: List login accounts
+      operationId: listAccounts
+      responses:
+        '200':
+          description: Account listing
+        '401':
+          description: Unauthenticated
+        '403':
+          description: Forbidden
+    post:
+      summary: Create a login account
+      operationId: createAccount
+      responses:
+        '201':
+          description: Account created
+        '400':
+          description: Validation error
+        '401':
+          description: Unauthenticated
+        '403':
+          description: Forbidden
+        '409':
+          description: Duplicate email
+  /platform/accounts/{accountId}/roles:
+    post:
+      summary: Grant a role
+      operationId: assignRole
+      parameters:
+        - name: accountId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Role granted
+        '401':
+          description: Unauthenticated
+        '403':
+          description: Forbidden
+        '404':
+          description: Account or role not found
+  /platform/accounts/{accountId}/roles/{roleCode}:
+    delete:
+      summary: Revoke a role
+      operationId: revokeRole
+      parameters:
+        - name: accountId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: roleCode
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Role revoked
+        '401':
+          description: Unauthenticated
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+  /platform/accounts/{accountId}/disable:
+    post:
+      summary: Disable a login account
+      operationId: disableAccount
+      parameters:
+        - name: accountId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Account disabled
+        '401':
+          description: Unauthenticated
+        '403':
+          description: Forbidden
+        '404':
+          description: Account not found
+  /employees:
+    get:
+      summary: List employees within the caller's data scope
+      operationId: listEmployees
+      responses:
+        '200':
+          description: List of employees
+        '401':
+          description: Unauthenticated
+        '403':
+          description: Forbidden
+    post:
+      summary: Create an employee
+      operationId: createEmployee
+      responses:
+        '201':
+          description: Employee created
+        '400':
+          description: Validation error
+        '401':
+          description: Unauthenticated
+        '403':
+          description: Forbidden
+        '409':
+          description: Unique constraint violation
+  /employees/me:
+    get:
+      summary: Read the caller's own employee profile
+      operationId: selfProfile
+      responses:
+        '200':
+          description: Self employee profile
+        '401':
+          description: Unauthenticated
+        '404':
+          description: Profile not linked
+  /employees/{id}:
+    get:
+      summary: Read one employee profile
+      operationId: getEmployeeProfile
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Employee profile
+        '401':
+          description: Unauthenticated
+        '403':
+          description: Forbidden
+        '404':
+          description: Employee not found
+    patch:
+      summary: Update the non-protected profile fields
+      operationId: updateEmployee
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Employee updated
+        '400':
+          description: Validation error
+        '401':
+          description: Unauthenticated
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+  /employees/{id}/status:
+    post:
+      summary: Change the employment status
+      operationId: changeStatus
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Status changed
+        '400':
+          description: Invalid transition
+        '401':
+          description: Unauthenticated
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+  /employees/{id}/assignment:
+    post:
+      summary: Change the organizational assignment
+      operationId: changeAssignment
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Assignment updated
+        '400':
+          description: Validation error
+        '401':
+          description: Unauthenticated
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+  /employees/{id}/manager:
+    post:
+      summary: Change the direct manager
+      operationId: changeManager
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Manager changed
+        '400':
+          description: Validation error
+        '401':
+          description: Unauthenticated
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+  /employees/{id}/account-link:
+    post:
+      summary: Link a login account
+      operationId: linkAccount
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Account linked
+        '400':
+          description: Validation error
+        '401':
+          description: Unauthenticated
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+        '409':
+          description: Account already linked
+  /employees/{id}/emergency-contacts:
+    post:
+      summary: Add an emergency contact
+      operationId: addEmergencyContact
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '201':
+          description: Contact added
+        '400':
+          description: Validation error
+        '401':
+          description: Unauthenticated
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+  /employees/{id}/documents:
+    post:
+      summary: Add a document reference
+      operationId: addDocumentReference
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '201':
+          description: Document reference added
+        '400':
+          description: Validation error
+        '401':
+          description: Unauthenticated
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+  /organization:
+    get:
+      summary: Read organization reference data
+      operationId: getOrganization
+      responses:
+        '200':
+          description: Organization hierarchy and reference catalogues
+        '401':
+          description: Unauthenticated
+        '403':
+          description: Forbidden
+  /organization/branches:
+    post:
+      summary: Create a branch
+      operationId: createBranch
+      responses:
+        '201':
+          description: Branch created
+        '400':
+          description: Validation error
+        '401':
+          description: Unauthenticated
+        '403':
+          description: Forbidden
+        '409':
+          description: Duplicate branch code
+  /organization/locations:
+    post:
+      summary: Create a work location
+      operationId: createWorkLocation
+      responses:
+        '201':
+          description: Location created
+        '400':
+          description: Validation error
+        '401':
+          description: Unauthenticated
+        '403':
+          description: Forbidden
+        '409':
+          description: Duplicate location code
+  /organization/org-units:
+    post:
+      summary: Create an organization unit
+      operationId: createOrgUnit
+      responses:
+        '201':
+          description: Unit created
+        '400':
+          description: Validation error
+        '401':
+          description: Unauthenticated
+        '403':
+          description: Forbidden
+        '409':
+          description: Duplicate unit code
+  /organization/job-titles:
+    post:
+      summary: Create a job title
+      operationId: createJobTitle
+      responses:
+        '201':
+          description: Job title created
+        '400':
+          description: Validation error
+        '401':
+          description: Unauthenticated
+        '403':
+          description: Forbidden
+        '409':
+          description: Duplicate code
+  /organization/job-grades:
+    post:
+      summary: Create a job grade
+      operationId: createJobGrade
+      responses:
+        '201':
+          description: Job grade created
+        '400':
+          description: Validation error
+        '401':
+          description: Unauthenticated
+        '403':
+          description: Forbidden
+        '409':
+          description: Duplicate code
+  /organization/work-schedules:
+    post:
+      summary: Create a work schedule
+      operationId: createWorkSchedule
+      responses:
+        '201':
+          description: Work schedule created
+        '400':
+          description: Validation error
+        '401':
+          description: Unauthenticated
+        '403':
+          description: Forbidden
+        '409':
+          description: Duplicate code

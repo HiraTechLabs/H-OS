@@ -2,20 +2,15 @@
 
 The committed stack for H-OS. Caliper must not ask for a stack preset; this file is the preset. Deviation requires a Decision.
 
-Status: the backend language/framework row is **under re-evaluation**. `DEC-0001` (TypeScript on
-Node.js LTS, NestJS) moved from `accepted` to `proposed` on 2026-11-02 and `DEC-0008` records the open
-comparison between Go, C# + ASP.NET Core, Java + Spring Boot and the NestJS baseline. **No
-replacement is approved and no candidate may be adopted** until a replacement Decision is accepted.
-The rest of the stack remains the preset unless a later Decision changes it; all other rule files are
-language-neutral except where they name tools.
+Status: the backend technology is **Go**, accepted in DEC-0009 superseding DEC-0001 and DEC-0008.
 
 ## Committed stack
 
 | Area | Choice |
 |---|---|
 | Architecture | Modular monolith, one deployable, one PostgreSQL, one schema per app |
-| Backend | TypeScript (strict) on Node.js LTS, NestJS |
-| ORM / migrations | Drizzle ORM, SQL migrations via drizzle-kit |
+| Backend | Go (standard library net/http, pgx/v5) |
+| ORM / migrations | SQL migrations, pgx/v5 |
 | Database | PostgreSQL with extensions `ltree`, `btree_gist`, `pgcrypto` |
 | API | REST, OpenAPI 3.1 generated from code, generated typed client, `/api/v1`, errors as RFC 9457 problem+json |
 | Frontend | React, TypeScript strict, Vite, TanStack Router and Query, Zustand (UI state only), react-hook-form + zod |
@@ -39,6 +34,9 @@ H-OS/
 │   ├── principles/            parent principles (these files)
 │   ├── decisions/             DEC-NNNN-*.md
 │   └── graph/                 graph.json + generated views
+├── backend/
+│   ├── cmd/server/            backend entrypoint and composition root
+│   └── internal/              platform kernel and apps modules
 ├── platform/
 │   ├── api/                   host app, composition root, kernel (identity, org-scope, events, audit, links)
 │   ├── web/                   H-OS shell (launcher, top bar, command palette, notifications)

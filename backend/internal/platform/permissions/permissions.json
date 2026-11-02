@@ -1,0 +1,26 @@
+{
+  "version": 3,
+  "permissions": [
+    { "code": "hr.employee.read", "description": "Read employee records within the granted data scope" },
+    { "code": "hr.employee.read.sensitive", "description": "Read identity, contact and document sections of a profile" },
+    { "code": "hr.employee.create", "description": "Create employee records" },
+    { "code": "hr.employee.update", "description": "Update employee records and effective-dated assignments" },
+    { "code": "hr.employee.change_status", "description": "Change employment lifecycle status" },
+    { "code": "hr.employee.export", "description": "Export employee data" },
+    { "code": "hr.organization.read", "description": "Read branches, locations, units, job catalogue and schedules" },
+    { "code": "hr.organization.manage", "description": "Manage organization structure and reference data" },
+    { "code": "hr.audit.read", "description": "Read the audit trail" },
+    { "code": "platform.account.manage", "description": "Manage platform login accounts" },
+    { "code": "platform.integration.retry", "description": "Retry failed integration events" },
+    { "code": "app.archive.access", "description": "Access the H-Archive application" },
+    { "code": "app.finance.access", "description": "Access the H-Finance application" },
+    { "code": "app.sales.access", "description": "Access the H-SALES application" },
+    { "code": "app.inventory.access", "description": "Access the H-Inventory application" },
+    { "code": "app.rooms.access", "description": "Access the H-ROOMS application" },
+    { "code": "app.hr.access", "description": "Access the H-HR application" },
+    { "code": "app.camera.access", "description": "Access the H-CAMERA application" },
+    { "code": "app.assets.access", "description": "Access the H-ASSETS application" },
+    { "code": "app.collaboration.access", "description": "Access Team Collaboration & Chat Apps" },
+    { "code": "app.tasks.access", "description": "Access Task Management Tool / App" }
+  ]
+}

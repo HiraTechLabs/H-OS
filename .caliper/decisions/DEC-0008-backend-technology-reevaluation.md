@@ -1,7 +1,7 @@
 ---
 id: DEC-0008
 title: Re-evaluate the H-OS backend runtime and framework
-status: proposed
+status: superseded
 date: 2026-11-02
 tags:
   - decision
@@ -21,7 +21,7 @@ affects:
   - apps/**
   - docs/tech-evaluation/**
 relaxes: []
-supersedes: null
+supersedes: DEC-0009
 ---
 
 # Context

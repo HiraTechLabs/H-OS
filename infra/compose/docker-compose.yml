@@ -21,5 +21,34 @@ services:
       retries: 20
     restart: unless-stopped
 
+  api:
+    build:
+      context: ../..
+      dockerfile: backend/Dockerfile
+    container_name: h-os-api
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      APP_ENV: development
+      PORT: 3000
+      API_BASE_URL: http://localhost:3000/api/v1
+      DATABASE_URL: postgres://h_os:h_os@postgres:5432/h_os
+      CORS_ORIGINS: http://localhost:5173
+      SESSION_SECRET: change-me-to-at-least-32-characters-long
+      SESSION_TTL_MINUTES: 480
+      SESSION_IDLE_TIMEOUT_MINUTES: 120
+      LOGIN_RATE_LIMIT: 20
+      LOG_LEVEL: info
+      BOOTSTRAP_ADMIN_EMAIL: admin@h-os.local
+      BOOTSTRAP_ADMIN_PASSWORD: ChangeThis-Local-Dev-Only-1
+      ORGANIZATION_CODE: HOS
+      ORGANIZATION_NAME_EN: HiraTech Labs
+      ORGANIZATION_NAME_AR: هيرا تك لابس
+      ORGANIZATION_TIMEZONE: Asia/Riyadh
+    ports:
+      - '3000:3000'
+    restart: unless-stopped
+
 volumes:
   h-os-postgres:

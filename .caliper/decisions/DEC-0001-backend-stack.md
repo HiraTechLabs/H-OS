@@ -1,7 +1,7 @@
 ---
 id: DEC-0001
 title: Adopt NestJS on TypeScript for the H-OS backend
-status: proposed
+status: superseded
 date: 2026-10-29
 tags:
   - tech-stack
@@ -13,8 +13,7 @@ affects:
   - platform/api/**
   - apps/**
 relaxes: []
-supersedes: null
-review_by: 2027-10-29
+supersedes: DEC-0009
 ---
 
 # Context
