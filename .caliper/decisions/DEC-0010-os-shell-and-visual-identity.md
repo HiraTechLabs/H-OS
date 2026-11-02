@@ -1,7 +1,7 @@
 ---
 id: DEC-0010
 title: Establish the H-OS Operating System Visual Identity, Shell Chrome and Typography
-status: accepted
+status: proposed
 date: 2026-11-02
 tags:
   - ui
@@ -38,6 +38,7 @@ supersedes: null
    - Dedicated persistent Global Dock on the inline-start edge (mirrored cleanly in RTL, collapsible to bottom dock on mobile).
    - System Bar separating system-level tools (Command Palette, Theme, Language, Profile) from application-local navigation.
    - Distinctive H-OS brand identity: Deep Obsidian Cosmos (`#0B132B`) with energetic Cyan/Teal accents, self-hosted IBM Plex Sans & IBM Plex Sans Arabic.
+   - Complete multi-palette system (Classic, Teal, Carbon) across Light and Dark appearance modes.
    - Native HTML5 `<dialog>` Command Palette for accessible keyboard-driven navigation.
    - Purposeful atmospheric Lock Screen entrance with under-200ms unlock transition.
 
@@ -46,7 +47,8 @@ supersedes: null
 Adopt **Option C** and enact `platform/ui/UI_SYSTEM.md`:
 
 1. **Supersession & Refinement of DEC-0004:**
-   - **Refines DEC-0004 §2 (Color Palette):** The preliminary navy baseline is deepened and refined into HiraTechLabs' Deep Obsidian Cosmos (`#0B132B`) and Midnight Navy (`#1C2541`) with Teal (`#0D9488`) and Electric Cyan (`#00F0FF`) accents. Contrast validation is preserved and documented in `platform/ui/UI_SYSTEM.md` exceeding WCAG 2.2 AA (ratios between 4.55:1 and 18.57:1).
+   - **Refines DEC-0004 §2 (Color Palette):** The preliminary navy baseline is deepened and refined into HiraTechLabs' Deep Obsidian Cosmos (`#0B132B`) and Midnight Navy (`#1C2541`) with Teal (`#0F766E`) and Electric Cyan (`#00F0FF`) accents. Contrast validation is preserved and documented in `platform/ui/README.md` and `UI_SYSTEM.md` exceeding WCAG 2.2 AA (ratios between 4.55:1 and 18.57:1).
+   - **Teal Contrast Correction:** The preliminary `#0D9488` yielded 3.74:1 against white; corrected to `#0F766E` (Teal-700) yielding 5.47:1 for normal text and buttons.
    - **Refines DEC-0004 §3 (Dark Mode):** Dynamic multi-theme (Light, Dark, System) and multiple color palettes (Classic, Teal, Carbon) are fully formalized and supported via CSS variables without FOUC.
    - **Refines DEC-0004 Shell Architecture:** Replaces the top navigation bar with a persistent Global Dock (inline-start) and top System Bar.
 
@@ -59,10 +61,14 @@ Adopt **Option C** and enact `platform/ui/UI_SYSTEM.md`:
    - H-OS owns the shell chrome, global authorization boundaries, application discovery, and system preferences.
    - Each individual application (e.g. H-HR) retains full autonomy over its domain page composition, internal sub-routes, and information layouts.
 
-4. **Command Palette:**
-   - Implemented using native `<dialog>` and ARIA combobox/listbox conventions.
-   - Accessible via `Ctrl+K` and `Cmd+K`.
+4. **Command Palette & Scalable Dock:**
+   - Implemented using native `<dialog>` and ARIA combobox/listbox conventions (`Ctrl+K`/`Cmd+K`).
    - Filters registered applications and permitted sub-routes strictly according to session permissions.
+   - Dock handles overflow with an overflow launcher triggering the Command Palette when application count exceeds screen capacity.
+
+## Status Note
+
+This decision is set to `status: proposed` pending formal review and acceptance by the project owner at Checkpoint 1.
 
 ## Consequences
 
