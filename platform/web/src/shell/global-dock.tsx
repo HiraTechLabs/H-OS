@@ -34,11 +34,11 @@ export function GlobalDock({ apps, onOpenPalette }: GlobalDockProps): ReactNode 
           {/* H-OS Logo / Brand Anchor */}
           <Link
             to="/"
-            className="flex size-10 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-primary-hover text-on-primary font-bold shadow-xs hover:scale-105 active:scale-95 transition-all"
+            className="flex size-10 items-center justify-center rounded-xl overflow-hidden bg-surface border border-line shadow-xs hover:scale-105 active:scale-95 transition-all p-0.5"
             title={t('app.name')}
             aria-label={t('app.name')}
           >
-            <span className="text-lg tracking-wider">H</span>
+            <img src="/logo.jpeg" alt={t('app.name')} className="size-full object-cover rounded-lg" />
           </Link>
 
           <div className="w-8 border-t border-line/60" />

@@ -216,8 +216,8 @@ export function BootScreen(): ReactNode {
   return (
     <div className="flex min-h-screen items-center justify-center bg-canvas">
       <div className="flex flex-col items-center gap-3">
-        <div className="flex size-12 items-center justify-center rounded-2xl bg-primary text-on-primary font-bold text-xl shadow-md animate-pulse">
-          H
+        <div className="flex size-14 items-center justify-center rounded-2xl overflow-hidden bg-surface border border-line shadow-md p-1 animate-pulse">
+          <img src="/logo.jpeg" alt="H-OS" className="size-full object-cover rounded-xl" />
         </div>
         <p className="text-sm font-medium text-ink-muted">Loading H-OS…</p>
       </div>

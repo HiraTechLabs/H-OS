@@ -98,8 +98,8 @@ export function LoginScreen(): ReactNode {
       {/* Top Discreet Utility Bar (System Tray) */}
       <header className="flex items-center justify-between gap-4 px-6 py-5">
         <div className="flex items-center gap-3">
-          <div className="flex size-9 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-primary-hover font-bold text-on-primary shadow-xs">
-            <span className="text-base tracking-wider">H</span>
+          <div className="flex size-9 items-center justify-center rounded-xl overflow-hidden bg-surface border border-line shadow-xs p-0.5">
+            <img src="/logo.jpeg" alt={t('app.name')} className="size-full object-cover rounded-lg" />
           </div>
           <span className="text-sm font-bold tracking-tight text-ink-strong">{t('app.name')}</span>
         </div>
