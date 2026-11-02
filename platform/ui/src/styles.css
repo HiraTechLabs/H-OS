@@ -7,40 +7,149 @@
  *   @import 'tailwindcss';
  *   @import '@h-os/ui/styles.css';
  *
- * Every color, radius, shadow and motion value below is a token. Components never use a raw
- * hex value and never use physical `left`/`right` properties (UX-005, UX-006).
+ * Dynamic themes (Light/Dark/System) and palettes (Classic, Teal, Carbon) are configured
+ * through CSS variables mapped into Tailwind @theme tokens. Logical properties
+ * are used exclusively across all components.
  */
+
+:root {
+  /* Default: Light Mode + Classic Palette */
+  --hos-canvas: #f8fafc;
+  --hos-surface: #ffffff;
+  --hos-surface-muted: #f1f5f9;
+  --hos-line: #e2e8f0;
+  --hos-line-strong: #cbd5e1;
+
+  --hos-ink: #334155;
+  --hos-ink-strong: #0f172a;
+  --hos-ink-muted: #64748b;
+
+  /* Classic Palette (Navy / Corporate Blue / Teal accents) */
+  --hos-primary: #1e3a8a;
+  --hos-primary-hover: #1d4ed8;
+  --hos-on-primary: #ffffff;
+  --hos-accent: #0d9488;
+  --hos-accent-strong: #0f766e;
+  --hos-accent-subtle: #ccfbf1;
+
+  /* Semantic feedback */
+  --hos-success: #15803d;
+  --hos-success-subtle: #dcfce7;
+  --hos-warning: #b45309;
+  --hos-warning-subtle: #fef3c7;
+  --hos-danger: #b91c1c;
+  --hos-danger-hover: #991b1b;
+  --hos-danger-subtle: #fee2e2;
+  --hos-info: #1d4ed8;
+  --hos-info-subtle: #dbeafe;
+
+  /* Elevation */
+  --hos-shadow-card: 0 1px 3px 0 rgb(0 0 0 / 0.05), 0 1px 2px -1px rgb(0 0 0 / 0.05);
+  --hos-shadow-raised: 0 10px 15px -3px rgb(0 0 0 / 0.08), 0 4px 6px -4px rgb(0 0 0 / 0.05);
+}
+
+/* Palette Overrides (Light Mode) */
+:root[data-palette='teal'] {
+  --hos-primary: #0f766e;
+  --hos-primary-hover: #115e59;
+  --hos-on-primary: #ffffff;
+  --hos-accent: #0284c7;
+  --hos-accent-strong: #0369a1;
+  --hos-accent-subtle: #e0f2fe;
+}
+
+:root[data-palette='carbon'] {
+  --hos-primary: #18181b;
+  --hos-primary-hover: #27272a;
+  --hos-on-primary: #ffffff;
+  --hos-accent: #4f46e5;
+  --hos-accent-strong: #4338ca;
+  --hos-accent-subtle: #e0e7ff;
+}
+
+/* Dark Mode (Default Classic) */
+:root[data-theme='dark'] {
+  --hos-canvas: #090d16;
+  --hos-surface: #111827;
+  --hos-surface-muted: #1f2937;
+  --hos-line: #1f293d;
+  --hos-line-strong: #374151;
+
+  --hos-ink: #cbd5e1;
+  --hos-ink-strong: #f8fafc;
+  --hos-ink-muted: #94a3b8;
+
+  --hos-primary: #3b82f6;
+  --hos-primary-hover: #60a5fa;
+  --hos-on-primary: #0f172a;
+  --hos-accent: #14b8a6;
+  --hos-accent-strong: #2dd4bf;
+  --hos-accent-subtle: #134e4a;
+
+  --hos-success: #22c55e;
+  --hos-success-subtle: #14532d;
+  --hos-warning: #f59e0b;
+  --hos-warning-subtle: #78350f;
+  --hos-danger: #ef4444;
+  --hos-danger-hover: #f87171;
+  --hos-danger-subtle: #7f1d1d;
+  --hos-info: #38bdf8;
+  --hos-info-subtle: #0c4a6e;
+
+  --hos-shadow-card: 0 1px 3px 0 rgb(0 0 0 / 0.3), 0 1px 2px -1px rgb(0 0 0 / 0.2);
+  --hos-shadow-raised: 0 10px 15px -3px rgb(0 0 0 / 0.5), 0 4px 6px -4px rgb(0 0 0 / 0.3);
+}
+
+/* Dark Mode Palette Overrides */
+:root[data-theme='dark'][data-palette='teal'] {
+  --hos-primary: #14b8a6;
+  --hos-primary-hover: #2dd4bf;
+  --hos-on-primary: #042f2e;
+  --hos-accent: #38bdf8;
+  --hos-accent-strong: #7dd3fc;
+  --hos-accent-subtle: #082f49;
+}
+
+:root[data-theme='dark'][data-palette='carbon'] {
+  --hos-primary: #a1a1aa;
+  --hos-primary-hover: #e4e4e7;
+  --hos-on-primary: #09090b;
+  --hos-accent: #818cf8;
+  --hos-accent-strong: #a5b4fc;
+  --hos-accent-subtle: #1e1b4b;
+}
+
 @theme {
   /* Surfaces */
-  --color-canvas: #f8fafc;
-  --color-surface: #ffffff;
-  --color-surface-muted: #f1f5f9;
-  --color-line: #e2e8f0;
-  --color-line-strong: #cbd5e1;
+  --color-canvas: var(--hos-canvas);
+  --color-surface: var(--hos-surface);
+  --color-surface-muted: var(--hos-surface-muted);
+  --color-line: var(--hos-line);
+  --color-line-strong: var(--hos-line-strong);
 
   /* Text */
-  --color-ink: #334155;
-  --color-ink-strong: #0f172a;
-  --color-ink-muted: #52627a;
+  --color-ink: var(--hos-ink);
+  --color-ink-strong: var(--hos-ink-strong);
+  --color-ink-muted: var(--hos-ink-muted);
 
   /* Brand */
-  --color-primary: #172554;
-  --color-primary-hover: #1e3a8a;
-  --color-on-primary: #ffffff;
-  --color-accent: #0d9488;
-  --color-accent-strong: #0f766e;
-  --color-accent-subtle: #ccfbf1;
+  --color-primary: var(--hos-primary);
+  --color-primary-hover: var(--hos-primary-hover);
+  --color-on-primary: var(--hos-on-primary);
+  --color-accent: var(--hos-accent);
+  --color-accent-strong: var(--hos-accent-strong);
+  --color-accent-subtle: var(--hos-accent-subtle);
 
   /* Semantic */
-  --color-success: #15803d;
-  --color-success-subtle: #dcfce7;
-  --color-warning: #b45309;
-  --color-warning-subtle: #fef3c7;
-  --color-danger: #b91c1c;
-  --color-danger-hover: #991b1b;
-  --color-danger-subtle: #fee2e2;
-  --color-info: #1d4ed8;
-  --color-info-subtle: #dbeafe;
+  --color-success: var(--hos-success);
+  --color-success-subtle: var(--hos-success-subtle);
+  --color-warning: var(--hos-warning);
+  --color-warning-subtle: var(--hos-warning-subtle);
+  --color-danger: var(--hos-danger);
+  --color-danger-hover: var(--hos-danger-hover);
+  --color-danger-subtle: var(--hos-danger-subtle);
+  --color-info: var(--hos-info);
+  --color-info-subtle: var(--hos-info-subtle);
 
   /* Typography */
   --font-sans:
@@ -52,8 +161,8 @@
   --radius-md: 0.375rem;
   --radius-lg: 0.5rem;
   --radius-xl: 0.75rem;
-  --shadow-card: 0 1px 2px rgb(15 23 42 / 0.06), 0 8px 24px -16px rgb(15 23 42 / 0.35);
-  --shadow-raised: 0 1px 3px rgb(15 23 42 / 0.1), 0 16px 40px -24px rgb(15 23 42 / 0.45);
+  --shadow-card: var(--hos-shadow-card);
+  --shadow-raised: var(--hos-shadow-raised);
 
   /* Motion */
   --ease-standard: cubic-bezier(0.2, 0, 0, 1);
@@ -62,12 +171,8 @@
 }
 
 @layer base {
-  html {
-    color-scheme: light;
-  }
-
   body {
-    @apply bg-canvas text-ink antialiased;
+    @apply bg-canvas text-ink antialiased min-h-screen transition-colors duration-150;
   }
 
   :focus-visible {
@@ -89,7 +194,7 @@
 
 @layer components {
   .hos-button {
-    @apply inline-flex cursor-pointer items-center justify-center gap-2 rounded-md border border-transparent px-4 py-2 text-sm font-semibold transition-colors;
+    @apply inline-flex cursor-pointer items-center justify-center gap-2 rounded-md border border-transparent px-4 py-2 text-sm font-semibold transition-all;
     transition-duration: var(--duration-quick);
     transition-timing-function: var(--ease-standard);
   }
@@ -99,11 +204,11 @@
   }
 
   .hos-button-primary {
-    @apply bg-primary text-on-primary hover:bg-primary-hover;
+    @apply bg-primary text-on-primary hover:bg-primary-hover shadow-sm active:scale-[0.98];
   }
 
   .hos-button-secondary {
-    @apply border-line-strong bg-surface text-ink-strong hover:bg-surface-muted;
+    @apply border-line-strong bg-surface text-ink-strong hover:bg-surface-muted shadow-sm;
   }
 
   .hos-button-ghost {
@@ -111,7 +216,7 @@
   }
 
   .hos-button-danger {
-    @apply bg-danger text-on-primary hover:bg-danger-hover;
+    @apply bg-danger text-on-primary hover:bg-danger-hover shadow-sm;
   }
 
   .hos-button-sm {
@@ -125,7 +230,7 @@
   .hos-input,
   .hos-select,
   .hos-textarea {
-    @apply w-full rounded-md border border-line-strong bg-surface px-3 py-2 text-sm text-ink-strong placeholder:text-ink-muted;
+    @apply w-full rounded-md border border-line-strong bg-surface px-3 py-2 text-sm text-ink-strong placeholder:text-ink-muted transition-colors;
   }
 
   .hos-input:focus-visible,
@@ -155,7 +260,7 @@
   }
 
   .hos-card {
-    @apply rounded-lg border border-line bg-surface shadow-card;
+    @apply rounded-xl border border-line bg-surface shadow-card transition-all;
   }
 
   .hos-card-body {
@@ -163,7 +268,7 @@
   }
 
   .hos-card-title {
-    @apply text-base font-semibold text-ink-strong;
+    @apply text-base font-semibold text-ink-strong tracking-tight;
   }
 
   .hos-card-subtitle {
@@ -199,27 +304,27 @@
   }
 
   .hos-alert {
-    @apply rounded-md border px-4 py-3 text-sm;
+    @apply rounded-lg border px-4 py-3 text-sm;
   }
 
   .hos-alert-info {
-    @apply border-info bg-info-subtle text-info;
+    @apply border-info/20 bg-info-subtle text-info;
   }
 
   .hos-alert-success {
-    @apply border-success bg-success-subtle text-success;
+    @apply border-success/20 bg-success-subtle text-success;
   }
 
   .hos-alert-warning {
-    @apply border-warning bg-warning-subtle text-warning;
+    @apply border-warning/20 bg-warning-subtle text-warning;
   }
 
   .hos-alert-danger {
-    @apply border-danger bg-danger-subtle text-danger;
+    @apply border-danger/20 bg-danger-subtle text-danger;
   }
 
   .hos-table-wrap {
-    @apply w-full overflow-x-auto rounded-lg border border-line bg-surface;
+    @apply w-full overflow-x-auto rounded-xl border border-line bg-surface;
   }
 
   .hos-table {
@@ -247,16 +352,16 @@
   }
 
   .hos-nav-link {
-    @apply inline-flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium text-ink transition-colors hover:bg-surface-muted;
+    @apply inline-flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-ink transition-colors hover:bg-surface-muted hover:text-ink-strong;
     transition-duration: var(--duration-quick);
   }
 
   .hos-nav-link[aria-current='page'] {
-    @apply bg-primary text-on-primary hover:bg-primary;
+    @apply bg-primary text-on-primary hover:bg-primary hover:text-on-primary font-semibold shadow-xs;
   }
 
   .hos-tab {
-    @apply inline-flex cursor-pointer items-center gap-2 rounded-md border border-line-strong bg-surface px-3 py-1.5 text-xs font-semibold text-ink transition-colors hover:bg-surface-muted;
+    @apply inline-flex cursor-pointer items-center gap-2 rounded-lg border border-line-strong bg-surface px-3 py-1.5 text-xs font-semibold text-ink transition-colors hover:bg-surface-muted;
     transition-duration: var(--duration-quick);
     transition-timing-function: var(--ease-standard);
   }

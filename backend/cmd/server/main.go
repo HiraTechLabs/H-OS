@@ -104,6 +104,13 @@ func main() {
 		return
 	}
 
+	// Always ensure migrations are applied before serving traffic
+	if err := db.Migrate(ctx, pool); err != nil {
+		logger.Error("db.auto_migrate_failed", "error", err)
+		os.Exit(1)
+	}
+	logger.Info("db.migrations_applied")
+
 	sessionSettings := auth.SessionSettings{
 		TTL:         cfg.SessionTTL,
 		IdleTimeout: cfg.SessionIdleTimeout,

@@ -3,9 +3,24 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="color-scheme" content="light" />
     <title>H-OS</title>
     <meta name="description" content="H-OS integrated business operating system" />
+    <script>
+      (function() {
+        try {
+          var mode = localStorage.getItem('hos-theme-mode') || 'system';
+          var palette = localStorage.getItem('hos-theme-palette') || 'classic';
+          var resolvedMode = mode;
+          if (mode === 'system') {
+            resolvedMode = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+          }
+          var root = document.documentElement;
+          root.setAttribute('data-theme', resolvedMode);
+          root.setAttribute('data-palette', palette);
+          root.style.colorScheme = resolvedMode;
+        } catch (e) {}
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

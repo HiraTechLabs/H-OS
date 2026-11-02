@@ -111,6 +111,13 @@ const homeRoute = createRoute({
   component: HomeScreen,
 });
 
+/** Redirect /apps/hr to the main HR module screen */
+const appsHrRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/apps/hr',
+  component: () => <Navigate to="/employees" replace />,
+});
+
 const employeesRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '/employees',
@@ -178,6 +185,7 @@ const loginRoute = createRoute({
 
 const routeTree = rootRoute.addChildren([
   homeRoute,
+  appsHrRoute,
   employeesRoute,
   employeeNewRoute,
   employeeRoute,

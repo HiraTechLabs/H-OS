@@ -45,11 +45,23 @@ func (h *HealthHandler) ready(w http.ResponseWriter, r *http.Request) {
 
 	checks := make(map[string]string)
 	checks["database"] = "pass"
+	checks["migrations"] = "pass"
 
 	if h.pool != nil {
 		var one int
 		if err := h.pool.QueryRow(ctx, "SELECT 1").Scan(&one); err != nil {
 			checks["database"] = "fail"
+			httpx.WriteJSON(w, http.StatusServiceUnavailable, healthResponse{
+				Status:    "fail",
+				Timestamp: time.Now().UTC().Format(time.RFC3339),
+				Checks:    checks,
+			})
+			return
+		}
+
+		ready, err := db.IsReady(ctx, h.pool)
+		if err != nil || !ready {
+			checks["migrations"] = "fail"
 			httpx.WriteJSON(w, http.StatusServiceUnavailable, healthResponse{
 				Status:    "fail",
 				Timestamp: time.Now().UTC().Format(time.RFC3339),

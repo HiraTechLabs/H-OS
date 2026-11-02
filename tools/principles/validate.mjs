@@ -183,6 +183,15 @@ function validateDecisions() {
       fail(join(ROOT, path), `supersedes ${frontMatter.supersedes}, which does not exist`);
     }
     if (id === frontMatter?.supersedes) fail(join(ROOT, path), 'a decision cannot supersede itself');
+
+    // A superseded decision's designated successor must not be superseded by another decision back to itself (no cycles).
+    if (frontMatter?.status === 'superseded' && frontMatter?.supersedes) {
+      const successorPath = byId.get(frontMatter.supersedes);
+      const successorFM = successorPath ? parseFrontMatter(join(ROOT, successorPath)) : null;
+      if (successorFM?.supersedes === id) {
+        fail(join(ROOT, path), `mutual/circular supersedes loop detected between ${id} and ${frontMatter.supersedes}`);
+      }
+    }
   }
 
   return byId;

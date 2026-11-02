@@ -4,7 +4,7 @@ CREATE EXTENSION IF NOT EXISTS btree_gist;
 --> statement-breakpoint
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
 --> statement-breakpoint
-CREATE SCHEMA "platform";
+CREATE SCHEMA IF NOT EXISTS "platform";
 --> statement-breakpoint
 CREATE TABLE "platform"."account" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,

@@ -12,3 +12,6 @@ export type { AlertProps, AlertTone } from './components/alert.js';
 export { Table } from './components/table.js';
 export { PageHeader, EmptyState, Skeleton, Spinner } from './components/feedback.js';
 export type { PageHeaderProps, EmptyStateProps } from './components/feedback.js';
+export { ThemeProvider, useTheme } from './theme/theme-context.js';
+export type { ThemeMode, ThemePalette, ThemeContextValue } from './theme/theme-context.js';
+export { ThemeSwitcher } from './components/theme-switcher.js';

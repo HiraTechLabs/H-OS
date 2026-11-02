@@ -17,7 +17,7 @@ affects:
   - apps/**
   - backend/**
 relaxes: []
-supersedes: DEC-0008
+supersedes: null
 ---
 
 # Context

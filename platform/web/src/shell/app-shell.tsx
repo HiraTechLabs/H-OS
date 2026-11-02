@@ -3,7 +3,7 @@ import type { ReactNode } from 'react';
 import { Link } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 import { Permission } from '@h-os/contracts';
-import { Button } from '@h-os/ui';
+import { Button, ThemeSwitcher } from '@h-os/ui';
 import { hasPermission, useSession } from '@h-os/web-client';
 import { LanguageSwitcher } from './language-switcher.js';
 
@@ -41,8 +41,18 @@ export function AppShell({ children }: { readonly children: ReactNode }): ReactN
 
   const closeMenu = (): void => setMenuOpen(false);
 
+  const themeLabels = {
+    settings: t('theme.settings'),
+    light: t('theme.light'),
+    dark: t('theme.dark'),
+    system: t('theme.system'),
+    paletteClassic: t('theme.paletteClassic'),
+    paletteTeal: t('theme.paletteTeal'),
+    paletteCarbon: t('theme.paletteCarbon'),
+  };
+
   return (
-    <div className="flex min-h-screen flex-col bg-canvas">
+    <div className="flex min-h-screen flex-col bg-canvas overflow-x-clip selection:bg-primary/20">
       <a
         href="#main"
         className="sr-only rounded-md bg-primary px-4 py-2 text-sm font-semibold text-on-primary focus:not-sr-only focus:absolute focus:start-4 focus:top-3 focus:z-50"
@@ -50,21 +60,19 @@ export function AppShell({ children }: { readonly children: ReactNode }): ReactN
         {t('nav.skipToContent')}
       </a>
 
-      <header className="sticky top-0 z-40 border-b border-line bg-surface">
-        <div className="mx-auto flex w-full max-w-7xl items-center gap-3 px-4 py-3 sm:px-6">
-          <Link to="/" className="flex items-center gap-2 no-underline" onClick={closeMenu}>
-            <span
-              aria-hidden="true"
-              className="grid size-9 place-items-center rounded-lg bg-primary font-semibold text-on-primary"
-            >
-              H
-            </span>
-            <span className="hidden text-base font-semibold text-ink-strong sm:inline">
+      {/* Top Application Bar */}
+      <header className="sticky top-0 z-40 border-b border-line/80 bg-surface/90 backdrop-blur-md transition-colors">
+        <div className="mx-auto flex w-full max-w-7xl items-center gap-3 px-4 py-2.5 sm:px-6">
+          <Link to="/" className="flex items-center gap-2.5 no-underline group" onClick={closeMenu}>
+            <div className="flex size-9 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-primary-hover font-bold text-on-primary shadow-xs ring-1 ring-white/10 group-hover:scale-105 transition-transform">
+              <span className="text-base tracking-wider">H</span>
+            </div>
+            <span className="hidden text-base font-bold tracking-tight text-ink-strong sm:inline">
               {t('app.name')}
             </span>
           </Link>
 
-          <nav aria-label={t('nav.apps')} className="hidden flex-1 items-center gap-1 md:flex">
+          <nav aria-label={t('nav.apps')} className="hidden flex-1 items-center gap-1.5 md:flex ms-4">
             {entries.map((entry) => (
               <Link
                 key={entry.to}
@@ -79,15 +87,18 @@ export function AppShell({ children }: { readonly children: ReactNode }): ReactN
           </nav>
 
           <div className="ms-auto flex items-center gap-2">
+            <ThemeSwitcher labels={themeLabels} />
+
             <div className="hidden sm:block">
               <LanguageSwitcher />
             </div>
 
             <details className="relative">
-              <summary className="hos-button hos-button-secondary hos-button-sm cursor-pointer list-none">
-                <span className="max-w-40 truncate">{user?.displayName}</span>
+              <summary className="hos-button hos-button-secondary hos-button-sm cursor-pointer list-none flex items-center gap-2">
+                <span className="size-2 rounded-full bg-success" />
+                <span className="max-w-36 truncate font-medium">{user?.displayName}</span>
               </summary>
-              <div className="absolute end-0 z-50 mt-2 w-64 rounded-lg border border-line bg-surface p-3 shadow-raised">
+              <div className="absolute end-0 z-50 mt-2 w-64 rounded-xl border border-line bg-surface p-3 shadow-raised">
                 <p className="text-sm font-semibold text-ink-strong">{user?.displayName}</p>
                 <p className="mt-0.5 truncate text-xs text-ink-muted">{user?.email}</p>
                 <div className="mt-3 border-t border-line pt-3">
@@ -122,7 +133,7 @@ export function AppShell({ children }: { readonly children: ReactNode }): ReactN
           <nav
             id="mobile-nav"
             aria-label={t('nav.apps')}
-            className="flex flex-col gap-1 border-t border-line px-4 py-3 md:hidden"
+            className="flex flex-col gap-1.5 border-t border-line bg-surface px-4 py-3 md:hidden"
           >
             {entries.map((entry) => (
               <Link
@@ -136,7 +147,7 @@ export function AppShell({ children }: { readonly children: ReactNode }): ReactN
                 {t(entry.labelKey)}
               </Link>
             ))}
-            <div className="mt-2 border-t border-line pt-2 sm:hidden">
+            <div className="mt-2 border-t border-line pt-2 sm:hidden flex items-center justify-between">
               <LanguageSwitcher />
             </div>
           </nav>
@@ -147,31 +158,21 @@ export function AppShell({ children }: { readonly children: ReactNode }): ReactN
         {children}
       </main>
 
-      <footer className="border-t border-line px-4 py-4 text-center text-xs text-ink-muted sm:px-6">
-        {t('shell.footer', { year: new Date().getFullYear() })}
+      <footer className="border-t border-line/60 bg-surface/50 py-4 text-center text-xs text-ink-muted">
+        <p>{t('shell.footer', { year: new Date().getFullYear().toString() })}</p>
       </footer>
     </div>
   );
 }
 
-/** Full-page state used before the session is known, so no private screen ever flashes (UX-008). */
 export function BootScreen(): ReactNode {
-  const { t } = useTranslation();
   return (
-    <div className="grid min-h-screen place-items-center bg-canvas" role="status">
-      <p className="text-sm text-ink-muted">{t('common.loading')}</p>
-    </div>
-  );
-}
-
-/** Terminal session failure: the shell cannot know who the caller is. */
-export function SessionErrorScreen({ onRetry }: { readonly onRetry: () => void }): ReactNode {
-  const { t } = useTranslation();
-  return (
-    <div className="grid min-h-screen place-items-center bg-canvas px-4">
-      <div className="hos-card flex max-w-md flex-col gap-3 hos-card-body">
-        <h1 className="hos-card-title">{t('errors.network')}</h1>
-        <Button onClick={onRetry}>{t('common.retry')}</Button>
+    <div className="flex min-h-screen items-center justify-center bg-canvas">
+      <div className="flex flex-col items-center gap-3">
+        <div className="flex size-12 items-center justify-center rounded-2xl bg-primary text-on-primary font-bold text-xl shadow-md animate-pulse">
+          H
+        </div>
+        <p className="text-sm font-medium text-ink-muted">Loading H-OS…</p>
       </div>
     </div>
   );
@@ -180,12 +181,16 @@ export function SessionErrorScreen({ onRetry }: { readonly onRetry: () => void }
 export function ForbiddenScreen(): ReactNode {
   const { t } = useTranslation();
   return (
-    <div className="mx-auto flex max-w-lg flex-col items-center gap-3 py-16 text-center">
-      <h1 className="text-2xl font-semibold text-ink-strong">{t('shell.forbiddenTitle')}</h1>
-      <p className="text-sm text-ink-muted">{t('shell.forbiddenBody')}</p>
-      <Link to="/" className="hos-button hos-button-secondary mt-2">
-        {t('shell.goHome')}
-      </Link>
+    <div className="flex min-h-[50vh] flex-col items-center justify-center text-center p-6">
+      <div className="rounded-2xl border border-line bg-surface p-8 max-w-md shadow-card">
+        <h2 className="text-xl font-bold text-ink-strong">{t('shell.forbiddenTitle')}</h2>
+        <p className="mt-2 text-sm text-ink-muted">{t('shell.forbiddenBody')}</p>
+        <div className="mt-6">
+          <Link to="/" className="hos-button hos-button-primary">
+            {t('shell.goHome')}
+          </Link>
+        </div>
+      </div>
     </div>
   );
 }
@@ -193,12 +198,33 @@ export function ForbiddenScreen(): ReactNode {
 export function NotFoundScreen(): ReactNode {
   const { t } = useTranslation();
   return (
-    <div className="mx-auto flex max-w-lg flex-col items-center gap-3 py-16 text-center">
-      <h1 className="text-2xl font-semibold text-ink-strong">{t('shell.notFoundTitle')}</h1>
-      <p className="text-sm text-ink-muted">{t('shell.notFoundBody')}</p>
-      <Link to="/" className="hos-button hos-button-secondary mt-2">
-        {t('shell.goHome')}
-      </Link>
+    <div className="flex min-h-[50vh] flex-col items-center justify-center text-center p-6">
+      <div className="rounded-2xl border border-line bg-surface p-8 max-w-md shadow-card">
+        <h2 className="text-xl font-bold text-ink-strong">{t('shell.notFoundTitle')}</h2>
+        <p className="mt-2 text-sm text-ink-muted">{t('shell.notFoundBody')}</p>
+        <div className="mt-6">
+          <Link to="/" className="hos-button hos-button-primary">
+            {t('shell.goHome')}
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export function SessionErrorScreen({ onRetry }: { readonly onRetry: () => void }): ReactNode {
+  const { t } = useTranslation();
+  return (
+    <div className="flex min-h-screen items-center justify-center bg-canvas p-4">
+      <div className="rounded-2xl border border-line bg-surface p-8 max-w-md text-center shadow-card">
+        <h2 className="text-lg font-bold text-ink-strong">Session connection failed</h2>
+        <p className="mt-2 text-sm text-ink-muted">
+          Could not communicate with the H-OS authentication service.
+        </p>
+        <div className="mt-6">
+          <Button onClick={onRetry}>{t('common.retry')}</Button>
+        </div>
+      </div>
     </div>
   );
 }

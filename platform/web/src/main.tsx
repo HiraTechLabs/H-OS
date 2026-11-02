@@ -1,6 +1,7 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { I18nextProvider } from 'react-i18next';
+import { ThemeProvider } from '@h-os/ui';
 import { SessionProvider, configureApi } from '@h-os/web-client';
 import { App } from './App.js';
 import { applyDocumentLocale, i18n } from './i18n.js';
@@ -15,9 +16,11 @@ if (!container) throw new Error('Root element #root was not found');
 createRoot(container).render(
   <StrictMode>
     <I18nextProvider i18n={i18n}>
-      <SessionProvider>
-        <App />
-      </SessionProvider>
+      <ThemeProvider>
+        <SessionProvider>
+          <App />
+        </SessionProvider>
+      </ThemeProvider>
     </I18nextProvider>
   </StrictMode>,
 );
