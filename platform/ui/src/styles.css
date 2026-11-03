@@ -1,5 +1,5 @@
 /*
- * H-OS design tokens and component styles (DEC-0004).
+ * H-OS design tokens and component styles (DEC-0004, DEC-0010).
  *
  * This file does NOT import Tailwind itself: the host application owns one `@import
  * 'tailwindcss'` so the content scan is rooted in that application. Import order:
@@ -7,16 +7,17 @@
  *   @import 'tailwindcss';
  *   @import '@h-os/ui/styles.css';
  *
- * Dynamic themes (Light/Dark/System) and palettes (Classic, Teal, Carbon) are configured
- * through CSS variables mapped into Tailwind @theme tokens. Logical properties
+ * Dynamic themes (Light/Dark/System) and palettes (Classic Obsidian, Teal, Carbon)
+ * are configured through CSS variables mapped into Tailwind @theme tokens. Logical properties
  * are used exclusively across all components.
  */
 
 :root {
-  /* Default: Light Mode + Classic Palette */
+  /* Default: Light Mode + Classic Palette (Obsidian Baseline) */
   --hos-canvas: #f8fafc;
   --hos-surface: #ffffff;
   --hos-surface-muted: #f1f5f9;
+  --hos-surface-glass: rgba(255, 255, 255, 0.88);
   --hos-line: #e2e8f0;
   --hos-line-strong: #cbd5e1;
 
@@ -24,15 +25,18 @@
   --hos-ink-strong: #0f172a;
   --hos-ink-muted: #64748b;
 
-  /* Classic Palette (Navy / Corporate Blue / Teal accents) */
-  --hos-primary: #1e3a8a;
-  --hos-primary-hover: #1d4ed8;
+  /* Classic Palette (Deep Obsidian Navy + Contrast-Safe Teal) */
+  --hos-primary: #0b132b;
+  --hos-primary-hover: #1c2541;
   --hos-on-primary: #ffffff;
-  --hos-accent: #0d9488;
+  --hos-accent: #0f766e;
+  --hos-accent-hover: #115e59;
   --hos-accent-strong: #0f766e;
   --hos-accent-subtle: #ccfbf1;
+  --hos-focus-ring: #0f766e;
+  --hos-active-dot: #0d9488;
 
-  /* Semantic feedback */
+  /* Semantic feedback (WCAG 2.2 AA verified) */
   --hos-success: #15803d;
   --hos-success-subtle: #dcfce7;
   --hos-warning: #b45309;
@@ -50,28 +54,53 @@
 
 /* Palette Overrides (Light Mode) */
 :root[data-palette='teal'] {
+  --hos-canvas: #f0fdfa;
+  --hos-surface: #ffffff;
+  --hos-surface-muted: #ccfbf1;
+  --hos-surface-glass: rgba(255, 255, 255, 0.90);
+  --hos-line: #99f6e4;
+  --hos-line-strong: #5eead4;
+  --hos-ink: #134e4a;
+  --hos-ink-strong: #0f172a;
+  --hos-ink-muted: #115e59;
   --hos-primary: #0f766e;
   --hos-primary-hover: #115e59;
   --hos-on-primary: #ffffff;
   --hos-accent: #0284c7;
+  --hos-accent-hover: #0369a1;
   --hos-accent-strong: #0369a1;
   --hos-accent-subtle: #e0f2fe;
+  --hos-focus-ring: #0f766e;
+  --hos-active-dot: #0f766e;
 }
 
 :root[data-palette='carbon'] {
+  --hos-canvas: #f4f4f5;
+  --hos-surface: #ffffff;
+  --hos-surface-muted: #e4e4e7;
+  --hos-surface-glass: rgba(255, 255, 255, 0.92);
+  --hos-line: #e4e4e7;
+  --hos-line-strong: #d4d4d8;
+  --hos-ink: #27272a;
+  --hos-ink-strong: #09090b;
+  --hos-ink-muted: #52525b;
   --hos-primary: #18181b;
   --hos-primary-hover: #27272a;
   --hos-on-primary: #ffffff;
-  --hos-accent: #4f46e5;
-  --hos-accent-strong: #4338ca;
-  --hos-accent-subtle: #e0e7ff;
+  --hos-accent: #4338ca;
+  --hos-accent-hover: #3730a3;
+  --hos-accent-strong: #3730a3;
+  --hos-accent-subtle: #eef2ff;
+  --hos-focus-ring: #18181b;
+  --hos-active-dot: #18181b;
 }
 
-/* Dark Mode (Default Classic) */
+/* Dark Mode (Default Classic Obsidian) */
 :root[data-theme='dark'] {
   --hos-canvas: #090d16;
   --hos-surface: #111827;
   --hos-surface-muted: #1f2937;
+  --hos-surface-glass: rgba(17, 24, 39, 0.88);
   --hos-line: #1f293d;
   --hos-line-strong: #374151;
 
@@ -79,19 +108,22 @@
   --hos-ink-strong: #f8fafc;
   --hos-ink-muted: #94a3b8;
 
-  --hos-primary: #3b82f6;
+  --hos-primary: #38bdf8;
   --hos-primary-hover: #60a5fa;
-  --hos-on-primary: #0f172a;
-  --hos-accent: #14b8a6;
-  --hos-accent-strong: #2dd4bf;
+  --hos-on-primary: #090d16;
+  --hos-accent: #2dd4bf;
+  --hos-accent-hover: #5eead4;
+  --hos-accent-strong: #14b8a6;
   --hos-accent-subtle: #134e4a;
+  --hos-focus-ring: #00f0ff;
+  --hos-active-dot: #00f0ff;
 
-  --hos-success: #22c55e;
+  --hos-success: #4ade80;
   --hos-success-subtle: #14532d;
-  --hos-warning: #f59e0b;
+  --hos-warning: #fbbf24;
   --hos-warning-subtle: #78350f;
-  --hos-danger: #ef4444;
-  --hos-danger-hover: #f87171;
+  --hos-danger: #f87171;
+  --hos-danger-hover: #ef4444;
   --hos-danger-subtle: #7f1d1d;
   --hos-info: #38bdf8;
   --hos-info-subtle: #0c4a6e;
@@ -102,21 +134,45 @@
 
 /* Dark Mode Palette Overrides */
 :root[data-theme='dark'][data-palette='teal'] {
-  --hos-primary: #14b8a6;
-  --hos-primary-hover: #2dd4bf;
-  --hos-on-primary: #042f2e;
+  --hos-canvas: #021f1e;
+  --hos-surface: #042f2e;
+  --hos-surface-muted: #0a3f3d;
+  --hos-surface-glass: rgba(4, 47, 46, 0.90);
+  --hos-line: #115e59;
+  --hos-line-strong: #14b8a6;
+  --hos-ink: #ccfbf1;
+  --hos-ink-strong: #f0fdfa;
+  --hos-ink-muted: #99f6e4;
+  --hos-primary: #2dd4bf;
+  --hos-primary-hover: #5eead4;
+  --hos-on-primary: #021f1e;
   --hos-accent: #38bdf8;
+  --hos-accent-hover: #7dd3fc;
   --hos-accent-strong: #7dd3fc;
   --hos-accent-subtle: #082f49;
+  --hos-focus-ring: #2dd4bf;
+  --hos-active-dot: #2dd4bf;
 }
 
 :root[data-theme='dark'][data-palette='carbon'] {
-  --hos-primary: #a1a1aa;
+  --hos-canvas: #09090b;
+  --hos-surface: #18181b;
+  --hos-surface-muted: #27272a;
+  --hos-surface-glass: rgba(24, 24, 27, 0.92);
+  --hos-line: #27272a;
+  --hos-line-strong: #3f3f46;
+  --hos-ink: #e4e4e7;
+  --hos-ink-strong: #fafafa;
+  --hos-ink-muted: #a1a1aa;
+  --hos-primary: #fafafa;
   --hos-primary-hover: #e4e4e7;
   --hos-on-primary: #09090b;
   --hos-accent: #818cf8;
+  --hos-accent-hover: #a5b4fc;
   --hos-accent-strong: #a5b4fc;
   --hos-accent-subtle: #1e1b4b;
+  --hos-focus-ring: #818cf8;
+  --hos-active-dot: #818cf8;
 }
 
 @theme {
@@ -157,10 +213,11 @@
   --font-mono: 'IBM Plex Mono', 'SFMono-Regular', ui-monospace, monospace;
 
   /* Shape and depth */
-  --radius-sm: 0.25rem;
-  --radius-md: 0.375rem;
-  --radius-lg: 0.5rem;
-  --radius-xl: 0.75rem;
+  --radius-xs: 0.25rem;
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
   --shadow-card: var(--hos-shadow-card);
   --shadow-raised: var(--hos-shadow-raised);
 
@@ -176,8 +233,13 @@
   }
 
   :focus-visible {
-    outline: 2px solid var(--color-accent-strong);
+    outline: 2px solid var(--hos-focus-ring);
     outline-offset: 2px;
+  }
+
+  /* Arabic typography line-height compensation */
+  [dir='rtl'] {
+    line-height: 1.65;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -204,19 +266,19 @@
   }
 
   .hos-button-primary {
-    @apply bg-primary text-on-primary hover:bg-primary-hover shadow-sm active:scale-[0.98];
+    @apply bg-primary text-on-primary hover:bg-primary-hover shadow-xs active:scale-[0.98];
   }
 
   .hos-button-secondary {
-    @apply border-line-strong bg-surface text-ink-strong hover:bg-surface-muted shadow-sm;
+    @apply border-line-strong bg-surface text-ink-strong hover:bg-surface-muted shadow-xs;
   }
 
   .hos-button-ghost {
-    @apply text-ink hover:bg-surface-muted;
+    @apply text-ink hover:bg-surface-muted hover:text-ink-strong;
   }
 
   .hos-button-danger {
-    @apply bg-danger text-on-primary hover:bg-danger-hover shadow-sm;
+    @apply bg-danger text-on-primary hover:bg-danger-hover shadow-xs;
   }
 
   .hos-button-sm {
@@ -224,7 +286,7 @@
   }
 
   .hos-link {
-    @apply font-medium text-accent-strong underline-offset-4 hover:underline;
+    @apply font-medium text-accent underline-offset-4 hover:underline;
   }
 
   .hos-input,
@@ -236,8 +298,8 @@
   .hos-input:focus-visible,
   .hos-select:focus-visible,
   .hos-textarea:focus-visible {
-    @apply border-accent-strong;
-    outline: 2px solid var(--color-accent-subtle);
+    @apply border-primary;
+    outline: 2px solid var(--hos-focus-ring);
     outline-offset: 1px;
   }
 
@@ -344,11 +406,11 @@
   }
 
   .hos-table tbody tr:hover {
-    @apply bg-canvas;
+    @apply bg-surface-muted/50;
   }
 
   .hos-skeleton {
-    @apply animate-pulse rounded bg-surface-muted;
+    @apply animate-pulse rounded-md bg-surface-muted;
   }
 
   .hos-nav-link {
@@ -375,6 +437,6 @@
   }
 
   .hos-kbd {
-    @apply rounded border border-line-strong bg-surface px-1.5 py-0.5 font-mono text-xs text-ink;
+    @apply rounded border border-line-strong bg-surface px-1.5 py-0.5 font-mono text-xs text-ink shadow-xs;
   }
 }

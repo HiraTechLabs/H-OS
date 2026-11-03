@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import type { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Alert, Button, Card, Field, Input, ThemeSwitcher } from '@h-os/ui';
@@ -6,15 +6,43 @@ import { ApiError, errorMessageKey, useSession } from '@h-os/web-client';
 import { LanguageSwitcher } from '../shell/language-switcher.js';
 
 /**
- * The single sign-in screen for every H-OS app (UX-001, HHR-UX-001). Failure copy is generic on
- * purpose: the server does not reveal whether the email or the password was wrong (SEC-011).
+ * The H-OS Lock Screen (UX-001, HHR-UX-001, DEC-0010):
+ * - Atmospheric operating system entrance
+ * - Large local time and localized date
+ * - Architectural branching node background motif
+ * - High-contrast, WCAG 2.2 AA compliant login card
+ * - Under-200ms unlock transition upon authentication
+ * - Clean bilingual professional copy
  */
 export function LoginScreen(): ReactNode {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const session = useSession();
+  const lang = i18n.language.startsWith('ar') ? 'ar' : 'en';
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [failure, setFailure] = useState<unknown>(null);
+  const [currentTime, setCurrentTime] = useState(new Date());
+  const [isUnlocking, setIsUnlocking] = useState(false);
+
+  useEffect(() => {
+    const timer = setInterval(() => setCurrentTime(new Date()), 10_000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const formattedTime = useMemo(() => {
+    return new Intl.DateTimeFormat(lang === 'ar' ? 'ar-SA' : 'en-US', {
+      hour: '2-digit',
+      minute: '2-digit',
+    }).format(currentTime);
+  }, [currentTime, lang]);
+
+  const formattedDate = useMemo(() => {
+    return new Intl.DateTimeFormat(lang === 'ar' ? 'ar-SA' : 'en-US', {
+      weekday: 'long',
+      month: 'long',
+      day: 'numeric',
+    }).format(currentTime);
+  }, [currentTime, lang]);
 
   const message =
     failure === null
@@ -33,18 +61,47 @@ export function LoginScreen(): ReactNode {
     paletteCarbon: t('theme.paletteCarbon'),
   };
 
+  const handleLoginSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+    setFailure(null);
+    void session
+      .login({ email: email.trim(), password })
+      .then(() => {
+        setIsUnlocking(true);
+      })
+      .catch((error: unknown) => {
+        setIsUnlocking(false);
+        setFailure(error);
+      });
+  };
+
   return (
-    <div className="flex min-h-screen flex-col bg-canvas selection:bg-primary/20">
-      {/* Top Utility Bar */}
-      <header className="flex items-center justify-between gap-4 px-4 py-4 sm:px-8 border-b border-line/40 backdrop-blur-xs">
+    <div
+      className={`relative flex min-h-screen flex-col justify-between bg-canvas text-ink overflow-hidden transition-all duration-200 ${
+        isUnlocking ? 'opacity-0 scale-102' : 'opacity-100 scale-100'
+      }`}
+    >
+      {/* Background Architectural Node Vector Motif */}
+      <div className="pointer-events-none absolute inset-0 -z-10 opacity-30 dark:opacity-20 select-none overflow-hidden" aria-hidden="true">
+        <svg className="h-full w-full stroke-line-strong" fill="none" viewBox="0 0 1000 800">
+          <circle cx="500" cy="400" r="280" strokeDasharray="4 8" strokeWidth="1" />
+          <circle cx="500" cy="400" r="160" strokeWidth="1" />
+          <line x1="500" y1="120" x2="500" y2="680" strokeWidth="1" />
+          <line x1="220" y1="400" x2="780" y2="400" strokeWidth="1" />
+          <circle cx="500" cy="240" r="4" fill="currentColor" />
+          <circle cx="500" cy="560" r="4" fill="currentColor" />
+          <circle cx="340" cy="400" r="4" fill="currentColor" />
+          <circle cx="660" cy="400" r="4" fill="currentColor" />
+        </svg>
+      </div>
+
+      {/* Top Discreet Utility Bar (System Tray) */}
+      <header className="flex items-center justify-between gap-4 px-6 py-5">
         <div className="flex items-center gap-3">
-          <div className="flex size-10 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-primary-hover font-bold text-on-primary shadow-sm ring-1 ring-white/10">
-            <span className="text-lg tracking-wider">H</span>
+          <div className="flex size-9 items-center justify-center rounded-xl overflow-hidden bg-surface border border-line shadow-xs p-0.5">
+            <img src="/logo.jpeg" alt={t('app.name')} className="size-full object-cover rounded-lg" />
           </div>
-          <div className="flex flex-col">
-            <span className="text-base font-bold tracking-tight text-ink-strong">{t('app.name')}</span>
-            <span className="hidden sm:inline text-xs text-ink-muted">{t('app.tagline')}</span>
-          </div>
+          <span className="text-sm font-bold tracking-tight text-ink-strong">{t('app.name')}</span>
         </div>
 
         <div className="flex items-center gap-3">
@@ -53,32 +110,31 @@ export function LoginScreen(): ReactNode {
         </div>
       </header>
 
-      {/* Main OS Entrance Surface */}
-      <main className="flex flex-1 items-center justify-center p-4 sm:p-8">
-        <div className="relative w-full max-w-md">
-          {/* Subtle Ambient OS Glow Backdrop */}
-          <div className="pointer-events-none absolute -inset-4 rounded-3xl bg-gradient-to-r from-primary/10 via-accent/5 to-transparent blur-2xl -z-10" />
+      {/* Center Lock Screen Content & Form */}
+      <main className="flex flex-1 flex-col items-center justify-center px-4 py-8">
+        {/* Large Local Lock Screen Time & Date */}
+        <div className="text-center mb-8 select-none">
+          <p className="text-4xl sm:text-6xl font-bold tracking-tight text-ink-strong font-mono">
+            {formattedTime}
+          </p>
+          <p className="mt-1 text-sm sm:text-base font-medium text-ink-muted">
+            {formattedDate}
+          </p>
+        </div>
 
+        {/* Lock Screen Authentication Card */}
+        <div className="w-full max-w-sm">
           <Card
-            className="border-line/80 shadow-raised overflow-hidden"
+            className="border-line/90 bg-surface/95 backdrop-blur-md shadow-raised overflow-hidden"
             title={
-              <div className="flex items-center gap-2.5">
-                <div className="size-2 rounded-full bg-accent animate-pulse" />
-                <span className="text-lg font-bold">{t('auth.title')}</span>
+              <div className="flex items-center gap-2">
+                <span className="size-2 rounded-full bg-accent animate-pulse" />
+                <span className="text-base font-bold text-ink-strong">{t('auth.title')}</span>
               </div>
             }
             description={t('auth.subtitle')}
           >
-            <form
-              className="flex flex-col gap-4"
-              onSubmit={(event) => {
-                event.preventDefault();
-                setFailure(null);
-                void session
-                  .login({ email: email.trim(), password })
-                  .catch((error: unknown) => setFailure(error));
-              }}
-            >
+            <form className="flex flex-col gap-4 mt-2" onSubmit={handleLoginSubmit}>
               {message ? <Alert tone="danger">{message}</Alert> : null}
 
               <Field label={t('auth.email')}>
@@ -109,7 +165,11 @@ export function LoginScreen(): ReactNode {
               </Field>
 
               <div className="pt-2">
-                <Button type="submit" className="w-full py-2.5 text-base font-medium shadow-sm" disabled={session.signingIn}>
+                <Button
+                  type="submit"
+                  className="w-full py-2.5 text-sm font-semibold shadow-xs"
+                  disabled={session.signingIn}
+                >
                   {session.signingIn ? (
                     <span className="inline-flex items-center gap-2">
                       <svg className="size-4 animate-spin" viewBox="0 0 24 24" fill="none">
@@ -119,22 +179,19 @@ export function LoginScreen(): ReactNode {
                       {t('auth.submitting')}
                     </span>
                   ) : (
-                    t('auth.submit')
+                    <span>{t('auth.submit')}</span>
                   )}
                 </Button>
               </div>
             </form>
           </Card>
-
-          {/* Secure Workspace Trust Indicator */}
-          <div className="mt-8 flex items-center justify-center gap-2 text-center text-xs text-ink-muted">
-            <svg className="size-3.5 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-            </svg>
-            <span>{t('app.tagline')}</span>
-          </div>
         </div>
       </main>
+
+      {/* Discreet Platform Signature Footer */}
+      <footer className="py-4 text-center text-xs text-ink-muted">
+        <p>{lang === 'ar' ? 'H-OS · المنصة المؤسسية المتكاملة' : 'H-OS · Integrated Enterprise Workspace'}</p>
+      </footer>
     </div>
   );
 }
