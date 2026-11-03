@@ -55,7 +55,7 @@ function appPrincipleDirectories() {
 
 /** Parses the small YAML subset the decision front matter uses: scalars, block lists, `[]`, `null`. */
 function parseFrontMatter(file) {
-  const text = readFileSync(file, 'utf8');
+  const text = readFileSync(file, 'utf8').replace(/\r\n/g, '\n');
   if (!text.startsWith('---')) return null;
   const end = text.indexOf('\n---', 3);
   if (end === -1) return null;
